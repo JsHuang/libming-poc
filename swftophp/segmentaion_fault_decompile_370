@@ -1,0 +1,28 @@
+Segmentation fault in getString at decompile.c:370
+
+A Segmentation fault bug was found in function getString(decompile.c:440)
+
+```
+Program received signal SIGSEGV, Segmentation fault.
+0x0000000000406c67 in getString (act=act@entry=0x6293c0) at decompile.c:370
+370			t=malloc(strlenext(pool[act->p.Constant8])+3); /* 2 "'"s and a NULL */
+(gdb) bt
+#0  0x0000000000406c67 in getString (act=act@entry=0x6293c0) at decompile.c:370
+#1  0x0000000000408efd in decompileArithmeticOp (n=<optimized out>, actions=0x63a800, maxn=4) at decompile.c:1143
+#2  0x000000000040b7e4 in decompileActions (n=n@entry=4, actions=actions@entry=0x63a800, indent=<optimized out>)
+    at decompile.c:3494
+#3  0x000000000040d81c in decompileSETTARGET (n=5, actions=0x63a620, maxn=34, is_type2=<optimized out>)
+    at decompile.c:3169
+#4  0x000000000040b7e4 in decompileActions (n=n@entry=34, actions=actions@entry=0x63a620, indent=indent@entry=0)
+    at decompile.c:3494
+#5  0x000000000040d93e in decompile5Action (n=34, actions=0x63a620, indent=indent@entry=0) at decompile.c:3517
+#6  0x0000000000403f42 in outputSWF_DOACTION (pblock=0x629250) at outputscript.c:1551
+#7  0x00000000004015b4 in readMovie (f=0x628010) at main.c:281
+#8  main (argc=<optimized out>, argv=<optimized out>) at main.c:354
+```
+
+to reproduce it ,run swftophp with segmentaion_fault_decompile_370
+
+`./swftophp segmentaion_fault_decompile_370`
+
+credit: ADLab of Venustech
